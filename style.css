@@ -1,0 +1,36 @@
+.calculator {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 2fr repeat(4, 1fr);
+    grid-template-areas:   
+        "dis dis dis dis dis"
+        "num num num clr clr"
+        "num num num op1 op1"
+        "num num num eql op2"
+        "num num num eql op2";
+
+}
+
+.display {
+    grid-area: dis;
+}
+
+.button-numbers {
+    grid-area: num;
+}
+
+.button-operators1 {
+    grid-area: op1;
+}
+
+.button-operators2 {
+    grid-area: op2;
+}
+
+.clear {
+    grid-area: clr;
+}
+
+.equal {
+    grid-area: eql;
+}
