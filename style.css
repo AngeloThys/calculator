@@ -1,22 +1,60 @@
+* {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 28px;
+}
+
+body {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #8c8259;
+    background-image: url("data:image/svg+xml,%3Csvg width='48' height='32' viewBox='0 0 48 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23dbc546' fill-opacity='0.52'%3E%3Cpath d='M27 32c0-3.314 2.686-6 6-6 5.523 0 10-4.477 10-10S38.523 6 33 6c-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 6.627 0 12 5.373 12 12s-5.373 12-12 12c-2.21 0-4 1.79-4 4h-2zm-6 0c0-3.314-2.686-6-6-6-5.523 0-10-4.477-10-10S9.477 6 15 6c3.314 0 6-2.686 6-6h-2c0 2.21-1.79 4-4 4C8.373 4 3 9.373 3 16s5.373 12 12 12c2.21 0 4 1.79 4 4h2z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
 .calculator {
+    border: 8px ridge rgb(197, 180, 180);
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
+    height: 600px;
+    width: 400px;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: 2fr repeat(4, 1fr);
-    grid-template-areas:   
+    grid-template-rows: 1.5fr repeat(4, 1fr);
+    grid-template-areas:
         "dis dis dis dis dis"
         "num num num clr clr"
         "num num num op1 op1"
         "num num num eql op2"
         "num num num eql op2";
 
+    background-color: rgb(197, 180, 180);
 }
 
 .display {
     grid-area: dis;
+    font-size: 56px;
+    background-color: rgb(169, 155, 155);
+    border-bottom: 8px rgb(197, 180, 180) ridge;
+    overflow: auto;
+    overflow-wrap: break-word;
 }
 
 .button-numbers {
     grid-area: num;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.button-numbers>button {
+    height: 75px;
+    width: 75px;
 }
 
 .button-operators1 {
@@ -27,10 +65,43 @@
     grid-area: op2;
 }
 
+
+.button-operators1,
+.button-operators2 {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.button-operators1>button,
+.button-operators2>button {
+    height: 75px;
+    width: 75px;
+}
+
 .clear {
     grid-area: clr;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.clear>button {
+    height: 75px;
+    width: 155px;
 }
 
 .equal {
     grid-area: eql;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.equal>button {
+    height: 180px;
+    width: 75px;
 }
