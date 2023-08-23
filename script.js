@@ -1,34 +1,34 @@
 let numberOne, operator, numberTwo;
 
 function add(a, b) {
-    return a + b;
+    return Number(a) + Number(b);
 }
 
 function subtract(a, b) {
-    return a - b;
+    return Number(a) - Number(b);
 }
 
 function multiply(a, b) {
-    return a * b;
+    return Number(a) * Number(b);
 }
 
 function divide(a, b) {
-    return a / b;
+    return Number(a) / Number(b);
 }
 
 function operate(operator, numberOne, numberTwo) {
     switch(operator) {
         case '+':
-            add(numberOne, numberTwo);
+            calculatorDisplay.textContent = String(add(numberOne, numberTwo));
             break;
         case '-':
-            subtract(numberOne, numberTwo);
+            calculatorDisplay.textContent = String(subtract(numberOne, numberTwo));
             break;
         case '*':
-            multiply(numberOne, numberTwo);
+            calculatorDisplay.textContent = String(multiply(numberOne, numberTwo));
             break;
         case '/':
-            divide(numberOne, numberTwo);
+            calculatorDisplay.textContent = String(divide(numberOne, numberTwo));
             break;
     }
 }
@@ -45,6 +45,28 @@ numberButtons.forEach(numberButton => {
     numberButton.addEventListener('click', () => display(numberButton.textContent));
 });
 
+function selectOperator(operatorSelected) {
+    numberOne = calculatorDisplay.textContent;
+    operator = operatorSelected;
+    calculatorDisplay.textContent = '';
+}
+
+const operatorButtons = document.querySelectorAll(".button-operators1 > button, .button-operators2 > button");
+
+operatorButtons.forEach(operatorButton => {
+    operatorButton.addEventListener('click', () => selectOperator(operatorButton.textContent));
+});
+
+function equal() {
+    numberTwo = calculatorDisplay.textContent;
+    calculatorDisplay.textContent = '';
+    operate(operator, numberOne, numberTwo);
+}
+
+const equalButton = document.querySelector(".equal > button");
+
+equalButton.addEventListener('click', equal);
+
 function clear() {
     numberOne = null;
     operator = null;
@@ -53,6 +75,6 @@ function clear() {
     calculatorDisplay.textContent = '';
 }
 
-const clearButton = document.querySelector(".clear");
+const clearButton = document.querySelector(".clear > button");
 
 clearButton.addEventListener('click', clear);
