@@ -13,11 +13,13 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
+    if (b === 0) return 'Nice try smartass';
+    
     return Number(a) / Number(b);
 }
 
 function operate(operator, numberOne, numberTwo) {
-    switch(operator) {
+    switch (operator) {
         case '+':
             calculatorDisplay.textContent = String(add(numberOne, numberTwo));
             break;
@@ -46,9 +48,13 @@ numberButtons.forEach(numberButton => {
 });
 
 function selectOperator(operatorSelected) {
+    if (operator) {
+        numberTwo = calculatorDisplay.textContent;
+        operate(operator, numberOne, numberTwo);
+    }
+
     numberOne = calculatorDisplay.textContent;
     operator = operatorSelected;
-    calculatorDisplay.textContent = '';
 }
 
 const operatorButtons = document.querySelectorAll(".button-operators1 > button, .button-operators2 > button");
