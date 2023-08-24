@@ -1,4 +1,34 @@
-let numberOne, operator, numberTwo;
+let operandOne = null;
+let operandTwo = null;
+let operator = null;
+
+function display(operand) {
+    const calculatorDisplay = document.querySelector(".display");
+    calculatorDisplay.textContent += operand;
+}
+
+function assignEventListeners() {
+    const buttons = document.querySelectorAll(".buttons > button");
+    buttons.forEach(button => {
+        if(button.classList.contains("operand")) {
+            button.addEventListener('click', () => {
+                display(button.textContent);
+            });}
+        // } else if(button.classList.contains("operator")) {
+        //     button.addEventListener('click', );
+        // } else if(button.id === "clear") {
+        //     button.addEventListener('click', );
+        // } else if(button.id === "sign") {
+        //     button.addEventListener('click', );
+        // } else if(button.id === "equal") {
+        //     button.addEventListener('click', );
+        // } else if(button.id === "point") {
+        //     button.addEventListener('click', );
+        // }
+    });     
+}
+
+assignEventListeners();
 
 function add(a, b) {
     return Number(a) + Number(b);
@@ -35,52 +65,52 @@ function operate(operator, numberOne, numberTwo) {
     }
 }
 
-function display(number) {
-    calculatorDisplay.textContent += number;
-}
+// function display(number) {
+//     calculatorDisplay.textContent += number;
+// }
 
-const calculatorDisplay = document.querySelector(".display");
+// const calculatorDisplay = document.querySelector(".display");
 
-const numberButtons = document.querySelectorAll(".button-numbers > button");
+// const numberButtons = document.querySelectorAll(".button-numbers > button");
 
-numberButtons.forEach(numberButton => {
-    numberButton.addEventListener('click', () => display(numberButton.textContent));
-});
+// numberButtons.forEach(numberButton => {
+//     numberButton.addEventListener('click', () => display(numberButton.textContent));
+// });
 
-function selectOperator(operatorSelected) {
-    if (operator) {
-        numberTwo = calculatorDisplay.textContent;
-        operate(operator, numberOne, numberTwo);
-    }
+// function selectOperator(operatorSelected) {
+//     if (operator) {
+//         numberTwo = calculatorDisplay.textContent;
+//         operate(operator, numberOne, numberTwo);
+//     }
 
-    numberOne = calculatorDisplay.textContent;
-    operator = operatorSelected;
-}
+//     numberOne = calculatorDisplay.textContent;
+//     operator = operatorSelected;
+// }
 
-const operatorButtons = document.querySelectorAll(".button-operators1 > button, .button-operators2 > button");
+// const operatorButtons = document.querySelectorAll(".button-operators1 > button, .button-operators2 > button");
 
-operatorButtons.forEach(operatorButton => {
-    operatorButton.addEventListener('click', () => selectOperator(operatorButton.textContent));
-});
+// operatorButtons.forEach(operatorButton => {
+//     operatorButton.addEventListener('click', () => selectOperator(operatorButton.textContent));
+// });
 
-function equal() {
-    numberTwo = calculatorDisplay.textContent;
-    calculatorDisplay.textContent = '';
-    operate(operator, numberOne, numberTwo);
-}
+// function equal() {
+//     numberTwo = calculatorDisplay.textContent;
+//     calculatorDisplay.textContent = '';
+//     operate(operator, numberOne, numberTwo);
+// }
 
-const equalButton = document.querySelector(".equal > button");
+// const equalButton = document.querySelector(".equal > button");
 
-equalButton.addEventListener('click', equal);
+// equalButton.addEventListener('click', equal);
 
-function clear() {
-    numberOne = null;
-    operator = null;
-    numberTwo = null;
+// function clear() {
+//     numberOne = null;
+//     operator = null;
+//     numberTwo = null;
 
-    calculatorDisplay.textContent = '';
-}
+//     calculatorDisplay.textContent = '';
+// }
 
-const clearButton = document.querySelector(".clear > button");
+// const clearButton = document.querySelector(".clear > button");
 
-clearButton.addEventListener('click', clear);
+// clearButton.addEventListener('click', clear);
