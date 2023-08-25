@@ -1,34 +1,42 @@
 let operandOne = null;
 let operandTwo = null;
-let operator = null;
+let operatorOne = null;
+let operatorTwo = null;
 
-function display(operand) {
+function writeNumberToDisplay(operand) {
     const calculatorDisplay = document.querySelector(".display");
     calculatorDisplay.textContent += operand;
 }
 
-function assignEventListeners() {
-    const buttons = document.querySelectorAll(".buttons > button");
-    buttons.forEach(button => {
-        if(button.classList.contains("operand")) {
-            button.addEventListener('click', () => {
-                display(button.textContent);
-            });}
-        // } else if(button.classList.contains("operator")) {
-        //     button.addEventListener('click', );
-        // } else if(button.id === "clear") {
-        //     button.addEventListener('click', );
-        // } else if(button.id === "sign") {
-        //     button.addEventListener('click', );
-        // } else if(button.id === "equal") {
-        //     button.addEventListener('click', );
-        // } else if(button.id === "point") {
-        //     button.addEventListener('click', );
-        // }
-    });     
+function assignOperand() {
+    const calculatorDisplay = document.querySelector(".display");
+
+    if (operatorOne === null) {
+        operandOne = calculatorDisplay.textContent;
+    } else {
+        operandTwo = calculatorDisplay.textContent;
+    }
 }
 
-assignEventListeners();
+function assignOperator(operator) {
+    operatorOne = operator;
+}
+
+function clearDisplay() {
+    const calculatorDisplay = document.querySelector(".display");
+    calculatorDisplay.textContent = "";
+}
+
+function clearMemory() {
+    operandOne = null;
+    operandTwo = null;
+    operatorOne = null;
+}
+
+function changeSign() {
+    const calculatorDisplay = document.querySelector(".display");
+    calculatorDisplay.textContent = Number(calculatorDisplay.textContent) * -1;
+}
 
 function add(a, b) {
     return Number(a) + Number(b);
@@ -39,78 +47,104 @@ function subtract(a, b) {
 }
 
 function multiply(a, b) {
-    return Number(a) * Number(b);
+    // Round to 2 decimals to avoid overflow
+    return Math.round(Number(a) * Number(b) * 100) / 100;
 }
 
 function divide(a, b) {
     if (b === 0) return 'Nice try smartass';
-    
-    return Number(a) / Number(b);
+    // Round to 2 decimals to avoid overflow
+    return Math.round(Number(a) / Number(b) * 100) / 100;
 }
 
-function operate(operator, numberOne, numberTwo) {
-    switch (operator) {
+function performOperation() {
+    const calculatorDisplay = document.querySelector(".display");
+
+    switch (operatorOne) {
         case '+':
-            calculatorDisplay.textContent = String(add(numberOne, numberTwo));
+            calculatorDisplay.textContent = String(add(operandOne, operandTwo));
             break;
         case '-':
-            calculatorDisplay.textContent = String(subtract(numberOne, numberTwo));
+            calculatorDisplay.textContent = String(subtract(operandOne, operandTwo));
             break;
         case '*':
-            calculatorDisplay.textContent = String(multiply(numberOne, numberTwo));
+            calculatorDisplay.textContent = String(multiply(operandOne, operandTwo));
             break;
         case '/':
-            calculatorDisplay.textContent = String(divide(numberOne, numberTwo));
+            calculatorDisplay.textContent = String(divide(operandOne, operandTwo));
             break;
     }
 }
 
-// function display(number) {
-//     calculatorDisplay.textContent += number;
-// }
+function writePointToDisplay() {
+    const calculatorDisplay = document.querySelector(".display");
 
-// const calculatorDisplay = document.querySelector(".display");
+    if (!calculatorDisplay.textContent.includes(".")) {
+        if (calculatorDisplay.textContent === "") {
+            calculatorDisplay.textContent = "0."
+        } else {
+            calculatorDisplay.textContent += ".";
+        }
+    }
+}
 
-// const numberButtons = document.querySelectorAll(".button-numbers > button");
+function disablePointButton() {
+    const calculatorDisplay = document.querySelector(".display");
+    const pointButton = document.querySelector("#point");
 
-// numberButtons.forEach(numberButton => {
-//     numberButton.addEventListener('click', () => display(numberButton.textContent));
-// });
+    if (calculatorDisplay.textContent.includes(".")) {
+        pointButton.disabled = true;
+    } else {
+        pointButton.disabled = false;
+    }
+}
 
-// function selectOperator(operatorSelected) {
-//     if (operator) {
-//         numberTwo = calculatorDisplay.textContent;
-//         operate(operator, numberOne, numberTwo);
-//     }
+function assignEventListeners() {
+    const buttons = document.querySelectorAll(".buttons > button");
+    buttons.forEach(button => {
+        if (button.classList.contains("operand")) {
+            button.addEventListener('click', () => {
+                writeNumberToDisplay(button.textContent);
+                disablePointButton();
+            });
+        } else if (button.classList.contains("operator")) {
+            button.addEventListener('click', () => {
+                if (operatorOne === null) {
+                    assignOperand();
+                    assignOperator(button.textContent);
+                    clearDisplay();
+                } else {
+                    assignOperand()
+                    performOperation();
+                    clearMemory();
+                    assignOperator(button.textContent);
+                    disablePointButton();
+                }
+            });
+        } else if (button.id === "clear") {
+            button.addEventListener('click', () => {
+                clearDisplay();
+                clearMemory();
+                disablePointButton();
+            });
+        } else if (button.id === "sign") {
+            button.addEventListener('click', () => {
+                changeSign();
+            });
+        } else if (button.id === "equal") {
+            button.addEventListener('click', () => {
+                assignOperand()
+                performOperation();
+                clearMemory();
+                disablePointButton();
+            });
+        } else if (button.id === "point") {
+            button.addEventListener('click', () => {
+                writePointToDisplay();
+                disablePointButton();
+            });
+        }
+    });
+}
 
-//     numberOne = calculatorDisplay.textContent;
-//     operator = operatorSelected;
-// }
-
-// const operatorButtons = document.querySelectorAll(".button-operators1 > button, .button-operators2 > button");
-
-// operatorButtons.forEach(operatorButton => {
-//     operatorButton.addEventListener('click', () => selectOperator(operatorButton.textContent));
-// });
-
-// function equal() {
-//     numberTwo = calculatorDisplay.textContent;
-//     calculatorDisplay.textContent = '';
-//     operate(operator, numberOne, numberTwo);
-// }
-
-// const equalButton = document.querySelector(".equal > button");
-
-// equalButton.addEventListener('click', equal);
-
-// function clear() {
-//     numberOne = null;
-//     operator = null;
-//     numberTwo = null;
-
-//     calculatorDisplay.textContent = '';
-// }
-
-// const clearButton = document.querySelector(".clear > button");
-
-// clearButton.addEventListener('click', clear);
+assignEventListeners();
