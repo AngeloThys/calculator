@@ -1,11 +1,17 @@
 let operandOne = null;
 let operandTwo = null;
 let operatorOne = null;
-let operatorTwo = null;
+let operatorFlag = false;
 
 function writeNumberToDisplay(operand) {
     const calculatorDisplay = document.querySelector(".display");
-    calculatorDisplay.textContent += operand;
+
+    if (operatorFlag) {
+        calculatorDisplay.textContent = operand;
+        operatorFlag = false;
+    } else {
+        calculatorDisplay.textContent += operand;
+    }
 }
 
 function assignOperand() {
@@ -20,6 +26,7 @@ function assignOperand() {
 
 function assignOperator(operator) {
     operatorOne = operator;
+    operatorFlag = true;
 }
 
 function clearDisplay() {
@@ -31,6 +38,7 @@ function clearMemory() {
     operandOne = null;
     operandTwo = null;
     operatorOne = null;
+    operatorFlag = false;
 }
 
 function changeSign() {
@@ -112,11 +120,11 @@ function assignEventListeners() {
                 if (operatorOne === null) {
                     assignOperand();
                     assignOperator(button.textContent);
-                    clearDisplay();
                 } else {
-                    assignOperand()
+                    assignOperand();
                     performOperation();
                     clearMemory();
+                    assignOperand();
                     assignOperator(button.textContent);
                     disablePointButton();
                 }
