@@ -2,6 +2,7 @@ let operandTemp = null;
 let operandOne = null;
 let operandTwo = null;
 let operatorOne = null;
+let operatorHighlighted = null;
 let operatorFlag = false;
 let errorFlag = false;
 
@@ -32,6 +33,41 @@ function assignOperand() {
 function assignOperator(operator) {
     operatorOne = operator;
     operatorFlag = true;
+}
+
+function highlightOperator() {
+    if (operatorHighlighted) {
+        const operatorButton = document.querySelector(`#${operatorHighlighted}`);
+
+        operatorButton.classList.remove("buttonHighlighted");
+
+        operatorHighlighted = "";
+    }
+
+    if (operatorOne) {
+        let operatorName = "";
+
+        switch (operatorOne) {
+            case "+":
+                operatorName = "add";
+                break;
+            case "-":
+                operatorName = "subtract";
+                break;
+            case "*":
+                operatorName = "multiply";
+                break;
+            case "/":
+                operatorName = "divide";
+                break;
+        }
+
+        const operatorButton = document.querySelector(`#${operatorName}`);
+
+        operatorButton.classList.add("buttonHighlighted");
+
+        operatorHighlighted = operatorName;
+    }
 }
 
 function clearDisplay() {
@@ -75,11 +111,11 @@ function divide(a, b) {
 function performOperation() {
     const calculatorDisplay = document.querySelector(".display");
 
-    if (operandTwo === "" || operandTwo === null) {
+    if ((operandTwo === "" && operatorOne) || (operandTwo === null && operatorOne)) {
         calculatorDisplay.textContent = "Syntax Error";
         errorFlag = true;
         return;
-    } 
+    }
 
     switch (operatorOne) {
         case '+':
@@ -139,12 +175,14 @@ function assignEventListeners() {
                 if (operatorOne === null) {
                     assignOperand();
                     assignOperator(button.textContent);
+                    highlightOperator();
                 } else {
                     assignOperand();
                     performOperation();
                     clearMemory();
                     assignOperand();
                     assignOperator(button.textContent);
+                    highlightOperator();
                     disablePointButton();
                 }
             });
@@ -152,6 +190,7 @@ function assignEventListeners() {
             button.addEventListener('click', () => {
                 clearDisplay();
                 clearMemory();
+                highlightOperator();
                 disablePointButton();
             });
         } else if (button.id === "sign") {
@@ -163,6 +202,7 @@ function assignEventListeners() {
                 assignOperand()
                 performOperation();
                 clearMemory();
+                highlightOperator();
                 disablePointButton();
             });
         } else if (button.id === "point") {

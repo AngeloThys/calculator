@@ -8,6 +8,7 @@
     --cyclamen: #F06C9B;
     --melon: #F9B9B7;
     --peach-yellow: #F5D491;
+    --peach-yellow-darker: #d5b066;
     --lavender-blush: #EADDE1;
 }
 
@@ -81,6 +82,28 @@ button:active:enabled {
     filter: saturate(100%);
     transform: translateY(4px);
     box-shadow: 0px 0px 0px 0px #61A0AF;
+}
+
+.buttonHighlighted {
+    cursor: pointer;
+    padding: 0.25rem;
+    background-color: #F5D491;
+    border: 2px solid #d5b066;
+    border-radius: .25rem;
+    box-shadow: 0px 4px 0px 0px #d5b066;
+    transition: all 0.2s ease-in-out 0s;
+}
+
+.buttonHighlighted:hover:enabled {
+    filter: saturate(150%);
+    transform: translateY(1px);
+    box-shadow: 0px 3px 0px 0px #d5b066;
+}
+
+.buttonHighlighted:active:enabled {
+    filter: saturate(100%);
+    transform: translateY(4px);
+    box-shadow: 0px 0px 0px 0px #d5b066;
 }
 
 .buttons {
