@@ -1,26 +1,31 @@
+let operandTemp = null;
 let operandOne = null;
 let operandTwo = null;
 let operatorOne = null;
 let operatorFlag = false;
+let errorFlag = false;
 
 function writeNumberToDisplay(operand) {
     const calculatorDisplay = document.querySelector(".display");
 
-    if (operatorFlag) {
+    if (operatorFlag || errorFlag) {
         calculatorDisplay.textContent = operand;
+        operandTemp = operand;
         operatorFlag = false;
+        errorFlag = false;
     } else {
         calculatorDisplay.textContent += operand;
+        operandTemp += operand;
     }
 }
 
 function assignOperand() {
-    const calculatorDisplay = document.querySelector(".display");
-
     if (operatorOne === null) {
-        operandOne = calculatorDisplay.textContent;
+        operandOne = operandTemp;
+        operandTemp = "";
     } else {
-        operandTwo = calculatorDisplay.textContent;
+        operandTwo = operandTemp;
+        operandTemp = "";
     }
 }
 
@@ -32,6 +37,7 @@ function assignOperator(operator) {
 function clearDisplay() {
     const calculatorDisplay = document.querySelector(".display");
     calculatorDisplay.textContent = "";
+    operandTemp = "";
 }
 
 function clearMemory() {
@@ -44,6 +50,7 @@ function clearMemory() {
 function changeSign() {
     const calculatorDisplay = document.querySelector(".display");
     calculatorDisplay.textContent = Number(calculatorDisplay.textContent) * -1;
+    operandTemp = Number(calculatorDisplay.textContent) * -1;
 }
 
 function add(a, b) {
@@ -68,18 +75,28 @@ function divide(a, b) {
 function performOperation() {
     const calculatorDisplay = document.querySelector(".display");
 
+    if (operandTwo === "" || operandTwo === null) {
+        calculatorDisplay.textContent = "Syntax Error";
+        errorFlag = true;
+        return;
+    } 
+
     switch (operatorOne) {
         case '+':
             calculatorDisplay.textContent = String(add(operandOne, operandTwo));
+            operandTemp = String(add(operandOne, operandTwo));
             break;
         case '-':
             calculatorDisplay.textContent = String(subtract(operandOne, operandTwo));
+            operandTemp = String(subtract(operandOne, operandTwo));
             break;
         case '*':
             calculatorDisplay.textContent = String(multiply(operandOne, operandTwo));
+            operandTemp = String(multiply(operandOne, operandTwo));
             break;
         case '/':
             calculatorDisplay.textContent = String(divide(operandOne, operandTwo));
+            operandTemp = String(divide(operandOne, operandTwo));
             break;
     }
 }
@@ -89,9 +106,11 @@ function writePointToDisplay() {
 
     if (!calculatorDisplay.textContent.includes(".")) {
         if (calculatorDisplay.textContent === "") {
-            calculatorDisplay.textContent = "0."
+            calculatorDisplay.textContent = "0.";
+            operandTemp = "0.";
         } else {
             calculatorDisplay.textContent += ".";
+            operandTemp += ".";
         }
     }
 }
