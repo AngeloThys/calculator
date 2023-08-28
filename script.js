@@ -243,7 +243,7 @@ function addKeyboardSupport() {
             disablePointButton();
         } else if (event.key === "Alt") {
             changeSign();
-        } else if (event.key === "=") {
+        } else if (event.key === "=" || event.key === "Enter") {
             assignOperand()
             performOperation();
             clearMemory();
