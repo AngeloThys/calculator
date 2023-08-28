@@ -215,3 +215,45 @@ function assignEventListeners() {
 }
 
 assignEventListeners();
+
+function addKeyboardSupport() {
+    document.addEventListener('keyup', (event) => {
+        if (['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'].includes(event.key)) {
+            writeNumberToDisplay(event.key);
+            disablePointButton();
+        } else if (['*', '/', '-', '+'].includes(event.key)) {
+            if (operatorOne === null) {
+                assignOperand();
+                assignOperator(event.key);
+                highlightOperator();
+            } else {
+                assignOperand();
+                performOperation();
+                clearMemory();
+                assignOperand();
+                assignOperator(event.key);
+                highlightOperator();
+                disablePointButton();
+            }
+        } else if (event.key === "Escape") {
+            clearDisplay();
+            clearMemory();
+            highlightOperator();
+            disablePointButton();
+        } else if (event.key === "Alt") {
+            changeSign();
+        } else if (event.key === "=") {
+            assignOperand()
+            performOperation();
+            clearMemory();
+            highlightOperator();
+            disablePointButton();
+        } else if (event.key === ".") {
+            writePointToDisplay();
+            disablePointButton();
+        }
+
+    });
+}
+
+addKeyboardSupport();
