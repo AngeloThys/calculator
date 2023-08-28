@@ -86,7 +86,7 @@ function clearMemory() {
 function changeSign() {
     const calculatorDisplay = document.querySelector(".display");
     calculatorDisplay.textContent = Number(calculatorDisplay.textContent) * -1;
-    operandTemp = Number(calculatorDisplay.textContent) * -1;
+    operandTemp = calculatorDisplay.textContent;
 }
 
 function add(a, b) {
@@ -218,6 +218,7 @@ assignEventListeners();
 
 function addKeyboardSupport() {
     document.addEventListener('keyup', (event) => {
+        console.log(event.key);
         if (['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'].includes(event.key)) {
             writeNumberToDisplay(event.key);
             disablePointButton();
