@@ -257,3 +257,28 @@ function addKeyboardSupport() {
 }
 
 addKeyboardSupport();
+
+function createGithubButton() {
+    const githubButton = document.querySelector(".github");
+
+    githubButton.addEventListener('mouseenter', () => {
+        githubButton.classList.add('tilt-shake');
+    });
+
+    githubButton.addEventListener('mouseleave', () => {
+        githubButton.classList.remove('tilt-shake');
+    });
+
+    githubButton.addEventListener('click', () => {
+        githubButton.classList.remove('tilt-shake');
+        githubButton.classList.add('jump-drop');
+    });
+
+    githubButton.addEventListener('animationend', () => {
+        githubButton.classList.remove('jump-drop');
+
+        return window.open("https://github.com/AngeloThys", "_blank");
+    });
+}
+
+createGithubButton();
