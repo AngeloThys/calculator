@@ -1,8 +1,8 @@
-let operandTemp = null;
-let operandOne = null;
-let operandTwo = null;
-let operatorOne = null;
-let operatorHighlighted = null;
+let operandTemp = "";
+let operandOne = "";
+let operandTwo = "";
+let operatorOne = "";
+let operatorHighlighted = "";
 let operatorFlag = false;
 let errorFlag = false;
 
@@ -21,7 +21,7 @@ function writeNumberToDisplay(operand) {
 }
 
 function assignOperand() {
-    if (operatorOne === null) {
+    if (operatorOne === "") {
         operandOne = operandTemp;
         operandTemp = "";
     } else {
@@ -77,9 +77,9 @@ function clearDisplay() {
 }
 
 function clearMemory() {
-    operandOne = null;
-    operandTwo = null;
-    operatorOne = null;
+    operandOne = "";
+    operandTwo = "";
+    operatorOne = "";
     operatorFlag = false;
 }
 
@@ -111,7 +111,7 @@ function divide(a, b) {
 function performOperation() {
     const calculatorDisplay = document.querySelector(".display");
 
-    if ((operandTwo === "" && operatorOne) || (operandTwo === null && operatorOne)) {
+    if (operandTwo === "" && operatorOne) {
         calculatorDisplay.textContent = "Syntax Error";
         errorFlag = true;
         return;
@@ -172,7 +172,7 @@ function assignEventListeners() {
             });
         } else if (button.classList.contains("operator")) {
             button.addEventListener('click', () => {
-                if (operatorOne === null) {
+                if (operatorOne === "") {
                     assignOperand();
                     assignOperator(button.textContent);
                     highlightOperator();
@@ -223,7 +223,7 @@ function addKeyboardSupport() {
             writeNumberToDisplay(event.key);
             disablePointButton();
         } else if (['*', '/', '-', '+'].includes(event.key)) {
-            if (operatorOne === null) {
+            if (operatorOne === "") {
                 assignOperand();
                 assignOperator(event.key);
                 highlightOperator();
